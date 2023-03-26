@@ -22,7 +22,7 @@ disp = ai.Dispatcher(bot, storage)
 @disp.message_handler(commands="start")
 async def start(message: ai.types.Message):
     user_id = message.from_user.id
-    await message.answer("Привет! Я Test Habr Bot!")
+    await message.answer("Привет! Я Test Habr Bot! Пропиши /help, чтобы получить всю палитру комманд!")
 
 
 
