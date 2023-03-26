@@ -17,6 +17,9 @@ pip-delete-this-directory.txt
 # Environments
 venv/
 
+# Idea
+
+.idea/
 
 
 audio/
