@@ -1,6 +1,6 @@
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 import telegram
-import aiogram as ai
+import aiogram
 import os
 import asyncio as io
 
@@ -15,12 +15,12 @@ with open(file_p, 'r') as f:
 
 
 
-bot = ai.Bot(token=TOKEN)
+bot = aiogram.Bot(token=TOKEN)
 storage = MemoryStorage()
-disp = ai.Dispatcher(bot, storage)
+dp = aiogram.Dispatcher(bot, storage)
 
-@disp.message_handler(commands="start")
-async def start(message: ai.types.Message):
+@dp.message_handler(commands="start")
+async def start(message: aiogram.types.Message):
     user_id = message.from_user.id
     await message.answer("Привет! Я Test Habr Bot! Пропиши /help, чтобы получить всю палитру комманд!")
 
@@ -28,21 +28,25 @@ async def start(message: ai.types.Message):
 
 
 
-@disp.message_handler(commands="help")
-async def help(message: ai.types.Message):
+@dp.message_handler(commands="help")
+async def help(message: aiogram.types.Message):
     text = ''
     commands = [
         "/start - начать работу",
-        "/help - список всех команд"
+        "/help - список всех команд",
+        "/info - получить дополнительную информацию"
     ]
     help_message = "Список всех доступных команд:\n\n"
     help_message += "\n".join(commands)
     await message.answer(help_message)
 
 
+@dp.message_handler(commands="info")
+async def info(message: aiogram.types.Message):
+    await message.answer('Если нужна допольнительная информация, рекомендую посетить репозиторий: https://github.com/chellick/Telegtram_news_bot')
 
 if __name__ == '__main__':
-    ai.utils.executor.start_polling(disp, skip_updates=True)
+    aiogram.utils.executor.start_polling(dp, skip_updates=True)
 
 
 
