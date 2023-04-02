@@ -10,9 +10,12 @@ def get_theme(array):
     return themes
 
 
-for i in range(1, 12):
-    r = requests.get(f"https://habr.com/ru/hubs/page{i}")
-    html = BS(r.content, "html.parser")
-    arr = html.find_all("a", class_="tm-hub__title")
-    print(get_theme(arr))
+def get_profile_themes(url):
+    r = requests.get(url=url)
+    soup = BS(r.content, "html.parser")
+    arr = soup.find_all("a", class_= "tm-user-hubs__hub")
+    result = get_theme(arr)
 
+    return result
+
+print(get_profile_themes("https://habr.com/ru/users/chellick/"))
