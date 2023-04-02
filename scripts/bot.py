@@ -42,19 +42,19 @@ async def help(message: aiogram.types.Message):
 
 @dp.message_handler(commands="info")
 async def info(message: aiogram.types.Message):
-    await message.answer('Если нужна допольнительная информация, рекомендую посетить репозиторий: [ссылка](https://github.com/chellick/Telegtram_news_bot)', parse_mode="Markdown")
+    await message.answer('Если нужна допольнительная информация, рекомендую посетить репозиторий: [ссылка](https://github.com/chellick/Telegtram_news_bot)', parse_mode="Markdown", disable_web_page_preview=True)
 
 
 @dp.message_handler(commands="set_profile")
 async def choose_theme(message: aiogram.types.Message):
-    await message.answer('Дай мне ссылку на свой профиль езжи бл*я')
+    await message.answer('Пришлите ссылку на ваш профиль Habr.com')
     await SetProfile.state.set()
 
 @dp.message_handler(state=SetProfile.state)
 async def set_profile(message: aiogram.types.Message):
     r = get_profile_themes(message.text)
     result = get_message(r)
-    await message.answer(f'Ваши темы: \n {result}', parse_mode="Markdown")
+    await message.answer(f'Ваши темы:\n{result}', parse_mode="Markdown", disable_web_page_preview=True)
 
 
 
