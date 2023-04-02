@@ -18,4 +18,14 @@ def get_profile_themes(url):
 
     return result
 
-print(get_profile_themes("https://habr.com/ru/users/chellick/"))
+def get_message(array):
+    result = ''
+    for i in array:
+        result += f"[{i[0]}]({i[1]})" + "\n"
+
+    return result
+
+array = get_profile_themes("https://habr.com/ru/users/chellick/")
+
+# print(get_message(array))
+

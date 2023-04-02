@@ -1,10 +1,8 @@
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-import telegram
+from state import SetProfile
 import aiogram
 import os
-import asyncio as io
-
-
+from parc import *
 
 
 file_p = os.path.join('C:/Users/Matvey/OneDrive/Рабочий стол/Token bot.txt')
@@ -17,7 +15,7 @@ with open(file_p, 'r') as f:
 
 bot = aiogram.Bot(token=TOKEN)
 storage = MemoryStorage()
-dp = aiogram.Dispatcher(bot, storage)
+dp = aiogram.Dispatcher(bot, storage=storage)
 
 @dp.message_handler(commands="start")
 async def start(message: aiogram.types.Message):
@@ -34,7 +32,8 @@ async def help(message: aiogram.types.Message):
     commands = [
         "/start - начать работу",
         "/help - список всех команд",
-        "/info - получить дополнительную информацию"
+        "/info - получить дополнительную информацию",
+        "/set_profile - установить профиль Habr"
     ]
     help_message = "Список всех доступных команд:\n\n"
     help_message += "\n".join(commands)
@@ -46,9 +45,18 @@ async def info(message: aiogram.types.Message):
     await message.answer('Если нужна допольнительная информация, рекомендую посетить репозиторий: [ссылка](https://github.com/chellick/Telegtram_news_bot)', parse_mode="Markdown")
 
 
-@dp.message_handler(commands="choose_theme")
+@dp.message_handler(commands="set_profile")
 async def choose_theme(message: aiogram.types.Message):
-    await message.answer
+    await message.answer('Дай мне ссылку на свой профиль езжи бл*я')
+    await SetProfile.state.set()
+
+@dp.message_handler(state=SetProfile.state)
+async def set_profile(message: aiogram.types.Message):
+    r = get_profile_themes(message.text)
+    result = get_message(r)
+    await message.answer(f'Ваши темы: \n {result}', parse_mode="Markdown")
+
+
 
 if __name__ == '__main__':
     aiogram.utils.executor.start_polling(dp, skip_updates=True)
