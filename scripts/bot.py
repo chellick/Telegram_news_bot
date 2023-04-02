@@ -43,7 +43,12 @@ async def help(message: aiogram.types.Message):
 
 @dp.message_handler(commands="info")
 async def info(message: aiogram.types.Message):
-    await message.answer('Если нужна допольнительная информация, рекомендую посетить репозиторий: https://github.com/chellick/Telegtram_news_bot')
+    await message.answer('Если нужна допольнительная информация, рекомендую посетить репозиторий: [ссылка](https://github.com/chellick/Telegtram_news_bot)', parse_mode="Markdown")
+
+
+@dp.message_handler(commands="choose_theme")
+async def choose_theme(message: aiogram.types.Message):
+    await message.answer
 
 if __name__ == '__main__':
     aiogram.utils.executor.start_polling(dp, skip_updates=True)
