@@ -24,7 +24,7 @@ def connect_mysql():
 
 
 
-def fetch_themes(id, url):
+def fetch_themes(idb, url):
     file_p = os.path.join('C:/Users/Matvey/OneDrive/Рабочий стол/sqltoken.txt')
 
     with open(file_p, 'r') as f:
@@ -41,12 +41,18 @@ def fetch_themes(id, url):
     print('DB connected')
 
 
-    mycursor.execute(f"INSERT into user_info VALUES({id}, {url})")
+    mycursor.execute(f"INSERT into user_info VALUES({idb}, {url})")
     mydb.commit()
+    mydb.close()
     return print('FETCHED THEMES')
 
-print(fetch_themes(1, 'test/url'))
+# print(fetch_themes(2, "lol"))
 
+url = 'sdads/sadsad'
+idb = 123
 
+s = f"INSERT into user_info VALUES({idb}, {url})"
+
+print(s)
 
 
