@@ -21,6 +21,8 @@ venv/
 
 .idea/
 
+.vscode/
+
 
 audio/
 test.py

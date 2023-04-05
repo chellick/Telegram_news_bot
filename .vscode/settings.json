@@ -8,7 +8,7 @@
             "server": "localhost",
             "port": 3306,
             "driver": "MySQL",
-            "name": "vscode",
+            "name": "vs",
             "database": "telegram_test_bot",
             "username": "root"
         }
