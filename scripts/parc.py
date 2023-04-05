@@ -26,5 +26,5 @@ def get_message(array):
     return result
 
 # array = get_profile_themes("https://habr.com/ru/users/chellick/")
+# print(get_message(array))
 
-# print(array)

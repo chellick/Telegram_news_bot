@@ -34,4 +34,4 @@ def fetch_themes(idb, url):
         return url
     
 
-print(fetch_themes(4, "lol/dsadas/aaasda"))
+# print(fetch_themes(692175727, "lol/dsadas/aaasda")[0])
