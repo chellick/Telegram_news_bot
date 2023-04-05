@@ -65,7 +65,7 @@ async def save_themes(message: aiogram.types.Message):
     user_id = message.from_user.id
     user_url = message.text
     print(user_url[16:])
-    fetch_themes(int(user_id), str(user_url[16:]))
+    fetch_themes(int(user_id), str(user_url))
     await message.answer(f'Ваши темы:\n{result}', parse_mode="Markdown", disable_web_page_preview=True)
 
 
