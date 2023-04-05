@@ -51,29 +51,25 @@ async def choose_theme(message: aiogram.types.Message):
     await message.answer('Пришлите ссылку на ваш профиль Habr.com')
     await SetProfile.state.set()
 
-# @dp.message_handler(state=SetProfile.state)
-# async def set_profile(message: aiogram.types.Message):
-#     r = get_profile_themes(message.text)
-#     result = get_message(r)
-#     await message.answer(f'Ваши темы:\n{result}', parse_mode="Markdown", disable_web_page_preview=True)
-
 
 @dp.message_handler(state=SetProfile.state)
-async def save_themes(message: aiogram.types.Message):
+async def save_themes(message: aiogram.types.Message, state: aiogram.dispatcher.FSMContext):
     r = get_profile_themes(message.text)
     result = get_message(r)
     user_id = message.from_user.id
     user_url = message.text
-    print(user_url[16:])
     fetch_themes(int(user_id), str(user_url))
     await message.answer(f'Ваши темы:\n{result}', parse_mode="Markdown", disable_web_page_preview=True)
+    await state.finish()
 
 
 
-
-
-
-
+@dp.message_handler(commands="my_profile")
+async def my_profile(message: aiogram.types.Message):
+    user_id = message.from_user.id
+    url = fetch_themes(int(user_id), str())[0]
+    result = get_message(get_profile_themes(url))
+    await message.answer(f'Это ваш профиль! Вот ваши сохраненные темы:\n{result}', parse_mode="Markdown", disable_web_page_preview=True)
 
 
 
@@ -82,7 +78,3 @@ async def save_themes(message: aiogram.types.Message):
 
 if __name__ == '__main__':
     aiogram.utils.executor.start_polling(dp, skip_updates=True)
-
-
-
-
