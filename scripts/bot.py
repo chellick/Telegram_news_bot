@@ -48,28 +48,38 @@ async def info(message: aiogram.types.Message):
 
 @dp.message_handler(commands="set_profile")
 async def choose_theme(message: aiogram.types.Message):
-    await message.answer('Пришлите ссылку на ваш профиль Habr.com')
-    await SetProfile.state.set()
+    user_id = message.from_user.id
+    if fetch_themes(int(user_id), '') is None:
+        await SetProfile.state.set()
+        await message.answer('Пришлите ссылку на ваш профиль Habr.com')
+    else:
+        await message.answer('Видимо, у вас уже есть профиль! Чтобы открыть его, воспользуйтесь /my_profile')
 
 
 @dp.message_handler(state=SetProfile.state)
 async def save_themes(message: aiogram.types.Message, state: aiogram.dispatcher.FSMContext):
-    r = get_profile_themes(message.text)
-    result = get_message(r)
-    user_id = message.from_user.id
-    user_url = message.text
-    fetch_themes(int(user_id), str(user_url))
-    await message.answer(f'Ваши темы:\n{result}', parse_mode="Markdown", disable_web_page_preview=True)
-    await state.finish()
-
-
+    if 'https://habr.com' in message.text:
+        r = get_profile_themes(message.text)
+        result = get_message(r)
+        user_id = message.from_user.id
+        user_url = message.text
+        set_themes(int(user_id), str(user_url))
+        await message.answer(f'Ваши темы:\n{result}', parse_mode="Markdown", disable_web_page_preview=True)
+        await state.finish()
+    else:
+        await message.answer('Неправильная ссылка, попробуйте снова')
+        await state.finish()
+    
 
 @dp.message_handler(commands="my_profile")
 async def my_profile(message: aiogram.types.Message):
     user_id = message.from_user.id
-    url = fetch_themes(int(user_id), str())[0]
-    result = get_message(get_profile_themes(url))
-    await message.answer(f'Это ваш профиль! Вот ваши сохраненные темы:\n{result}', parse_mode="Markdown", disable_web_page_preview=True)
+    url = fetch_themes(int(user_id), str())
+    if url is None:
+        await message.answer('У вас ещё нет профиля! Чтобы настроить, выберите /set_profile')
+    else:
+        result = get_message(get_profile_themes(url))
+        await message.answer(f'Это ваш профиль! Вот ваши сохраненные темы:\n{result}', parse_mode="Markdown", disable_web_page_preview=True)
 
 
 
