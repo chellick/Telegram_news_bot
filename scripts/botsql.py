@@ -1,7 +1,6 @@
 import os
 import mysql.connector
 import pandas as pd
-import csv
 
 def set_themes(idb, url):
     file_p = os.path.join('C:/Users/Matvey/OneDrive/Рабочий стол/sqltoken.txt')
@@ -17,12 +16,12 @@ def set_themes(idb, url):
     )
 
     mycursor = mydb.cursor()
-    mycursor.execute(f"SELECT url FROM user_test WHERE id = {idb}")
+    mycursor.execute(f"SELECT url FROM user_info WHERE id = {idb}")
     result = mycursor.fetchall()
     if len(result) > 0:
         return None
     else:
-        mycursor.execute(f"INSERT into user_test VALUES({idb}, \"{url}\")")
+        mycursor.execute(f"INSERT into user_info VALUES({idb}, \"{url}\")")
         mydb.commit()
         mydb.close()
         return url[0]
@@ -43,7 +42,7 @@ def fetch_themes(idb, url):
     )
 
     mycursor = mydb.cursor()
-    mycursor.execute(f"SELECT url FROM user_test WHERE id = {idb}")
+    mycursor.execute(f"SELECT url FROM user_info WHERE id = {idb}")
     result = mycursor.fetchall()
     if len(result) > 0:
         for r in result:

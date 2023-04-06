@@ -12,8 +12,6 @@ with open(file_p, 'r') as f:
     TOKEN = f.read()
 
 
-
-
 bot = aiogram.Bot(token=TOKEN)
 storage = MemoryStorage()
 dp = aiogram.Dispatcher(bot, storage=storage)
