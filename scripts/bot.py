@@ -80,7 +80,21 @@ async def my_profile(message: aiogram.types.Message):
         await message.answer(f'Это ваш профиль! Вот ваши сохраненные темы:\n{result}', parse_mode="Markdown", disable_web_page_preview=True)
 
 
+@dp.message_handler(commands="news")
+async def news(message: aiogram.types.Message):
+    user_id = message.from_user.id
+    url = fetch_themes(int(user_id), str())
+    if url is None:
+        await message.answer('У вас ещё нет профиля! Чтобы настроить, выберите /set_profile')
+    else:
+        text = []
+        arr = get_profile_themes(url)
+        for n in range(len(arr)):
+            text.append(get_news(arr[n][1]))
+        text = get_message(text)
+        await message.answer(f'Вот список ваших сегодняшних тем: \n{text}', parse_mode="Markdown", disable_web_page_preview=True)
 
+        
 
 
 

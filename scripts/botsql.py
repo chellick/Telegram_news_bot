@@ -1,6 +1,5 @@
 import os
 import mysql.connector
-import pandas as pd
 
 def set_themes(idb, url):
     file_p = os.path.join('C:/Users/Matvey/OneDrive/Рабочий стол/sqltoken.txt')
@@ -51,7 +50,3 @@ def fetch_themes(idb, url):
     
     else:
         return None
-        
-
-# print(fetch_themes(8, ''))
-# print(set_themes(7, ''))
