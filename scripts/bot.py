@@ -92,7 +92,7 @@ async def news(message: aiogram.types.Message):
         for n in range(len(arr)):
             text.append(get_news(arr[n][1]))
         text = get_message(text)
-        await message.answer(f'Вот список ваших сегодняшних тем: \n{text}', parse_mode="Markdown", disable_web_page_preview=True)
+        await message.answer(f'Вот список ваших сегодняшних тем для всех выбранных разделов: \n{text}', parse_mode="Markdown", disable_web_page_preview=True)
 
         
 
